@@ -1,0 +1,22 @@
+{
+  "title": "Chapter isolation fixture",
+  "config": {
+    "chunk_size": 64,
+    "overlap": 20,
+    "respect_boundaries": true
+  },
+  "chapters": [
+    {
+      "filename": "a.html",
+      "title": "Alpha",
+      "html": "<p>Alpha text includes café and a reproducible example. Alpha text includes café and a reproducible example. Alpha text includes café and a reproducible example. Alpha text includes café and a reproducible example. Alpha text includes café and a reproducible example. Alpha text includes café and a reproducible example. Alpha text includes café and a reproducible example. Alpha text includes café and a reproducible example. Alpha text includes café and a reproducible example. Alpha text includes café and a reproducible example. Alpha text includes café and a reproducible example. Alpha text includes café and a reproducible example.</p>",
+      "expected_text": "Alpha text includes café and a reproducible example. Alpha text includes café and a reproducible example. Alpha text includes café and a reproducible example. Alpha text includes café and a reproducible example. Alpha text includes café and a reproducible example. Alpha text includes café and a reproducible example. Alpha text includes café and a reproducible example. Alpha text includes café and a reproducible example. Alpha text includes café and a reproducible example. Alpha text includes café and a reproducible example. Alpha text includes café and a reproducible example. Alpha text includes café and a reproducible example."
+    },
+    {
+      "filename": "b.html",
+      "title": "Beta",
+      "html": "<p>Beta text includes 日本語 and another independent example. Beta text includes 日本語 and another independent example. Beta text includes 日本語 and another independent example. Beta text includes 日本語 and another independent example. Beta text includes 日本語 and another independent example. Beta text includes 日本語 and another independent example. Beta text includes 日本語 and another independent example. Beta text includes 日本語 and another independent example. Beta text includes 日本語 and another independent example. Beta text includes 日本語 and another independent example. Beta text includes 日本語 and another independent example. Beta text includes 日本語 and another independent example.</p>",
+      "expected_text": "Beta text includes 日本語 and another independent example. Beta text includes 日本語 and another independent example. Beta text includes 日本語 and another independent example. Beta text includes 日本語 and another independent example. Beta text includes 日本語 and another independent example. Beta text includes 日本語 and another independent example. Beta text includes 日本語 and another independent example. Beta text includes 日本語 and another independent example. Beta text includes 日本語 and another independent example. Beta text includes 日本語 and another independent example. Beta text includes 日本語 and another independent example. Beta text includes 日本語 and another independent example."
+    }
+  ]
+}

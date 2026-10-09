@@ -10,7 +10,9 @@ Reproduce from the checkout root:
 node --test tests/test_chunk_overlap_ui.cjs
 ```
 
-The fixture is loaded by `ChunkingTests` in `tests/test_chunking.py`. The targeted volume regression above asserts bounded output and reports chunk counts, total content characters, and first offsets on failure. All Python tests use standard `unittest` discovery; no standalone test runner lives in `scripts/`.
+The fixture is loaded by `ChunkingTests` in `tests/test_chunking.py`, using its declared chunk size, overlap and boundary preference. The targeted volume regression above asserts bounded amplification relative to non-overlapping chunks and reports chunk counts, total content characters, and first offsets on failure. Defaults are tested independently. All Python tests use standard `unittest` discovery; no standalone test runner lives in `scripts/`.
+
+`chunk_export.json` supplies two independent HTML chapters and explicit expected text for `tests/test_chunk_exports.py`. JSONL expectations do not call the production text extractor. See `tests/README.md` for the test layout and CI commands.
 
 Measured against the original implementation and the corrected implementation:
 
