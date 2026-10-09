@@ -58,6 +58,11 @@ class MarkdownPlugin(Plugin):
             if cls.startswith("lang-"):
                 return cls.replace("lang-", "")
 
+        if el.name == "pre":
+            code = el.find("code", recursive=False)
+            if code is not None:
+                return self._detect_language(code)
+
         return None
 
     def _fix_image_paths(self, markdown: str) -> str:

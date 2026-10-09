@@ -72,10 +72,14 @@ class _HTMLTextExtractor(HTMLParser):
             self._code_language = self._detect_language(attrs_dict)
             self._code_buffer = []
 
-        elif tag == "code" and not self._in_pre:
-            self._in_code = True
-            self._code_language = self._detect_language(attrs_dict)
-            self._code_buffer = []
+        elif tag == "code":
+            if self._in_pre:
+                if not self._code_language:
+                    self._code_language = self._detect_language(attrs_dict)
+            else:
+                self._in_code = True
+                self._code_language = self._detect_language(attrs_dict)
+                self._code_buffer = []
 
         elif tag in self.BLOCK_TAGS:
             self.result.append("\n")
