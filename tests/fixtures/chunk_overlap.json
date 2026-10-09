@@ -1,0 +1,8 @@
+{
+  "description": "Deterministic long chapter exposing absolute-offset overlap amplification",
+  "text_unit": "word ",
+  "repetitions": 4000,
+  "chunk_size": 4000,
+  "overlap": 200,
+  "respect_boundaries": true
+}

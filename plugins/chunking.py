@@ -71,7 +71,11 @@ class ChunkingPlugin(Plugin):
         overlap: int = 200,
         respect_boundaries: bool = True,
     ) -> list[dict]:
-        """Chunk text into fixed-size pieces with optional overlap."""
+        """Chunk text using approximate tokens, capping overlap at half each span."""
+        if chunk_size <= 0:
+            raise ValueError("chunk_size must be positive")
+        if overlap < 0:
+            raise ValueError("overlap must be non-negative")
         if not text:
             return []
 
@@ -81,7 +85,7 @@ class ChunkingPlugin(Plugin):
 
         while start < text_len:
             target_end = self._estimate_char_position(text, start, chunk_size)
-            target_end = min(target_end, text_len)
+            target_end = min(max(target_end, start + 1), text_len)
 
             if respect_boundaries and target_end < text_len:
                 end = self._find_break_point(text, target_end)
@@ -103,9 +107,15 @@ class ChunkingPlugin(Plugin):
                     }
                 )
 
-            overlap_chars = self._estimate_char_position(text, end - overlap * 4, overlap) if overlap > 0 else 0
-            next_start = end - min(overlap_chars, end - start - 1)
-            start = max(next_start, start + 1)
+            if end == text_len:
+                break
+
+            # _estimate_char_position returns an absolute offset, not a length.
+            # Use a relative four-characters-per-token estimate for overlap.
+            # Cap it at half the actual span so even oversized overlap settings
+            # advance substantially, including after boundary adjustment.
+            overlap_chars = min(overlap * 4, (end - start) // 2)
+            start = end - overlap_chars
 
         return chunks
 

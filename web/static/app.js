@@ -791,7 +791,8 @@ async function download(cardElement) {
     }
     if (format === 'chunks') {
         const chunkSize = parseInt(cardElement.querySelector('.chunk-size-input').value) || 4000;
-        const chunkOverlap = parseInt(cardElement.querySelector('.chunk-overlap-input').value) || 200;
+        const parsedOverlap = parseInt(cardElement.querySelector('.chunk-overlap-input').value, 10);
+        const chunkOverlap = Number.isNaN(parsedOverlap) ? 200 : parsedOverlap;
         requestBody.chunking = {
             chunk_size: chunkSize,
             overlap: chunkOverlap
