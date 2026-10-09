@@ -40,8 +40,16 @@ class ChunkingTests(unittest.TestCase):
         self.assertEqual(self.default_chunks[-1]['end_offset'], len(self.long_text))
 
     def test_volume_regression(self):
-        self.assertLessEqual(len(self.default_chunks), 4)
-        self.assertLess(sum(len(c['content']) for c in self.default_chunks), 2 * len(self.long_text))
+        metrics = {
+            'input_characters': len(self.long_text),
+            'chunk_count': len(self.default_chunks),
+            'total_content_characters': sum(len(c['content']) for c in self.default_chunks),
+            'first_start_offsets': [c['start_offset'] for c in self.default_chunks[:10]],
+            'first_end_offsets': [c['end_offset'] for c in self.default_chunks[:10]],
+        }
+        diagnostic = json.dumps(metrics, indent=2)
+        self.assertLessEqual(metrics['chunk_count'], 4, diagnostic)
+        self.assertLess(metrics['total_content_characters'], 2 * len(self.long_text), diagnostic)
 
     def test_paragraph_break_is_preferred(self):
         text = 'word ' * 78 + '\n\n' + 'end. ' + 'word ' * 120

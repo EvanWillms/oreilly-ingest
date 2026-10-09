@@ -5,10 +5,12 @@
 Reproduce from the checkout root:
 
 ```bash
-.venv/bin/python scripts/reproduce_chunk_overlap.py
-.venv/bin/python -m unittest discover -s tests -v
+.venv/bin/python -m unittest tests.test_chunking.ChunkingTests.test_volume_regression -v
+.venv/bin/python -m unittest discover -v
 node --test tests/test_chunk_overlap_ui.cjs
 ```
+
+The fixture is loaded by `ChunkingTests` in `tests/test_chunking.py`. The targeted volume regression above asserts bounded output and reports chunk counts, total content characters, and first offsets on failure. All Python tests use standard `unittest` discovery; no standalone test runner lives in `scripts/`.
 
 Measured against the original implementation and the corrected implementation:
 
